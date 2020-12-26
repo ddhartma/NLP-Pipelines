@@ -178,7 +178,7 @@ Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokeniza
   - Split text into sentences (e.g. for translation)
     ```
     from nltk.tokenize import sent_tokenize
-    # split text into sent4ences using NLTK
+    # split text into sentences using NLTK
     sentences = sent_tokenize(text)
     ```
 
@@ -284,7 +284,7 @@ Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemm
 - With this approach, we are able to reduce non-trivial inflections such as 'is', 'was', 'were', back to the root 'be'.
 - [NLTK](www.nltk.org/api/nltk.tokenize.html) uses the default lemmatizer Wordnet database.
   ```
-  from ntlk.stem.wordnet import WordNetLemmatizer
+  from nltk.stem.wordnet import WordNetLemmatizer
 
   # Reduce words to their root form
   lemmed = [WordNetLemmatizer().lemmatize(w) for w in words]
