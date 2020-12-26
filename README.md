@@ -2,6 +2,18 @@
 [image2]: text_processing2.png "text_processing2"
 [image3]: text_processing3.png "text_processing3"
 [image4]: text_processing4.png "text_processing4"
+[image5]: text_processing5.png "text_processing5"
+[image6]: text_processing6.png "text_processing6"
+[image7]: text_processing7.png "text_processing7"
+[image8]: text_processing8.png "text_processing8"
+[image9]: text_processing9.png "text_processing9"
+[image10]: text_processing10.png "text_processing10"
+[image11]: text_processing11.png "text_processing11"
+[image12]: text_processing12.png "text_processing12"
+[image13]: text_processing13.png "text_processing13"
+[image14]: text_processing14.png "text_processing14"
+[image15]: text_processing15.png "text_processing15"
+
 # NLP Pipelines
 Natural Language Processing is one of the fastest growing fields in the world. NLP is making its way into a number of products and services which we use every day.
 
@@ -246,6 +258,140 @@ Open notebook ***./text_processing/pos_ner.ipynb*** to handle Named Entity Recog
   ![image4]
 
 
+### Stemming and Lemmatization
+Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemmatization
+- ***Stemming***: In order to further simplify text data, stemming is the process of reducing a word to its stem or root form.
+- For instance, branching, branched, branches et cetera, can all be reduced to branch.
+- the suffixes 'ing' and 'ed' can be dropped off, 'ies' can be replaced by 'y' et cetera.
+- Stemming is meant to be a fast operation
+- NLTK has a few different stemmers for you to choose from
+  - PorterStemmer
+  - SnowballStemmer
+  - other language-specific stemmers
+
+- PorterStemmer (remove stop words beforehand)
+  ```
+  from nltk.stem.porter import PorterStemmer
+
+  # Reduce words to their stem
+  stemmed = [PorterStemmer().stem(w) for w in words]
+  print(stemmed)
+  ```
+- ***Lemmatization***: This is another technique to reduce words to a normalize form
+- In this case the transformation uses a ***dictionary*** to map different variants of a word back to its root.
+- With this approach, we are able to reduce non-trivial inflections such as 'is', 'was', 'were', back to the root 'be'.
+- [NLTK](www.nltk.org/api/nltk.tokenize.html) uses the default lemmatizer Wordnet database.
+  ```
+  from ntlk.stem.wordnet import WordNetLemmatizer
+
+  # Reduce words to their root form
+  lemmed = [WordNetLemmatizer().lemmatize(w) for w in words]
+  print(lemmed)
+  ```
+
+-  A lemmatizer needs to know about the part of speech for each word it's trying to transform. In this case, WordNetLemmatizer defaults to nouns, but one can override that by specifying the PoS parameter. Let's pass in 'v' for verbs.
+
+  ```
+  Lemmatize verbs by specifying pos
+  lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in lemmed]
+  print(lemmed)
+  ```
+
+- Stemming sometimes results in stems that are not complete words in English. Lemmatization is similar to stemming with one difference, the final form is also a meaningful word. Stemming does not need a dictionary like lemmatization does. Stemming maybe a less memory intensive option.
+
+  ![image5]
+
+
+### Summary of Text Processing
+ 1. Normalize
+ 2. Tokenize
+ 3. Remove Stop Words
+ 4. Stem / Lemmatize
+
+ ![image6]
+
+
+## Feature extraction
+- Now text is clean and normalized. Can we feed this into a statistical or a machine learning model? Text data is represented using an encoding such as ASCII or Unicode that maps every character to a number. Computer store and transmit these values as binaries. These numbers also have an implicit ordering, 65 < 66 < 67. But does that mean A is less than B. No. This would mislead the natural language processing algorithms. Moreover, individual characters don't carry much meaning at all. It is words that one should be concerned with,
+
+- So the question is, how do we come up with a representation for text data that we can use as features for modeling?
+The answer again depends on what kind of model you're using and what task you're trying to accomplish.
+
+- If you want to use a graph based model to extract insights, you may want to represent your words as symbolic nodes with relationships between them like WordNet.
+
+  ![image7]
+
+- For statistical models some sort of numerical representation would fit better.
+
+  ![image8]
+
+
+- For document level task, such as spam detection or sentiment analysis bag-of-words or doc2vec may fit better.
+
+  ![image9]
+
+
+- For working with individual words and phrases such as for text generation or machine translation, you'll need a word level representation such as word2vec or glove.
+
+  ![image10]
+
+### Bag of Words
+Open notebook ***./feature_extraction/bag_of_words_and_TF_IDF.ipynb*** to handle Bag of Words
+- The Bag of Words model treats each document as an un-ordered collection or bag of words.
+- To obtain a bag of words from a piece of raw text, apply text processing steps:
+  - cleaning
+  - normalizing
+  - splitting into words
+  - stemming, lemmatization
+
+
+- Turn each document into a vector of numbers, representing how many times each word occurs in a document. A set of documents is known as a corpus, and this gives the context for the vectors to be calculated.
+
+  1. Collect all the unique words present in the corpus to form your vocabulary.
+  2. Each row is a document
+  3. Ech column is a word representation
+  4. Count the number of occurrences of each word in each document and enter the value in the respective column.
+
+  ![image12]
+
+
+- What you can do with this representation?
+
+  - Check the similarity of documents by computing the dot product between the two row vectors
+  - dot product meaning: how many words they have in common or how similar their term frequencies are?
+  - dot product = the sum of the products of corresponding elements.
+  - The greater the dot product, the more similar the two vectors are.
+
+  ![image13]
+
+- The dot product has one drawback: it only captures the portions of overlap. So, pairs that are very different can end up with the same product as ones that are identical.
+
+  - A better measure is cosine similarity: the product is divided by their magnitudes or Euclidean norms.
+  - The angle theta is the angle between the vectors of the dot product
+  - Identical vectors have cosine equals 1
+  - Orthogonal vectors have cosine equal 0
+  - Antiparallel vectorshave cosine equal  -1
+
+### TF-IDF
+Open notebook ***./feature_extraction/bag_of_words_and_TF_IDF.ipynb*** to handle TF-IDF
+
+- One limitation of bag of words approach: It treats every word as being equally important. To solve this problem:  
+  - Count the number of documents in which each word occurs and divide the term frequency by the document frequency of that terms
+  - This provides a metric that is proportional to the frequency of occurrence of a term in a document
+  - and inversely proportional to the number of documents it appears in
+  - It highlights words that are unique for that document and thus this is better for characterizing those words
+
+  ![image14]
+
+- ***TF-IDF transformation***: It's simply the product of two weights
+  - The product consists of a term frequency and an inverse document frequency
+  - ***term frequency***: the raw count of a term 't' in document 'd' / total number of terms in 'd'
+  - ***inverse document frquency***: log of the total number of documents in collection 'D' / number of documents where t is present
+
+  ![image15]
+
+
+- This approach can be used to implement a Spam Detection application based on a supervised learning model.
 
 ## Setup Instructions
 The following is a brief set of instructions on setting up a cloned repository.
