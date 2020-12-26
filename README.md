@@ -1,5 +1,7 @@
 [image1]: text_processing1.png "text_processing1"
 [image2]: text_processing2.png "text_processing2"
+[image3]: text_processing3.png "text_processing3"
+[image4]: text_processing4.png "text_processing4"
 # NLP Pipelines
 Natural Language Processing is one of the fastest growing fields in the world. NLP is making its way into a number of products and services which we use every day.
 
@@ -187,6 +189,61 @@ Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word remov
   words = [w for w in words if w not in stopwords.words("english")]
   ```
 
+### Part-of-Speech Tagging
+Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tagging
+- To know the parts of speech (like nouns, verbs, pronouns) can help to understand the meaning of a sentence better
+- It can point out relationships betwee nwords and recognize cross references
+- [NLTK](www.nltk.org/api/nltk.tokenize.html) library  can identify parts-of-speech
+  ```
+  from nltk import pos_tag
+  # Tag parts of speech (PoS)
+  sentence = word_tokenize("I always lie down to tell a lie")
+  pos_tag(sentence)
+  ```
+
+  ![image3]
+
+- Sentence Parsing
+  ```
+  # Define a custom grammar
+  my_grammar = nltk.CFG.fromstring("""
+  S -> NP VP
+  PP -> P NP
+  NP -> Det N | Det N PP | 'I'
+  VP -> V NP | VP PP
+  Det -> 'an' | 'my'
+  N -> 'elephant' | 'pajamas'
+  V -> 'shot'
+  P -> 'in'
+  """)
+  parser = nltk.ChartParser(my_grammar)
+  ```
+  ```
+  # Parse a sentence
+  sentence = word_tokenize("I shot an elephant in my pajamas")
+  for tree in parser.parse(sentence):
+      print(tree)
+  ```
+
+### Named Entity Recognition
+Open notebook ***./text_processing/pos_ner.ipynb*** to handle Named Entity Recognition
+- Named entities are typically noun phrases that refer to some specific object, person, or place
+- Named entity recognition is often used to index and search for news articles on companies of interest
+- [NLTK](www.nltk.org/api/nltk.tokenize.html) provides the ne_chunk function to label named entities in text
+- Before using ne_chunk one has to
+  - first tokenize and then
+  - tag parts of speech
+
+  ```
+  from nltk import pos_tag, ne_chunk
+  from nltk.tokenize import word_tokenize
+
+  # Recognize named entities in  a tagged sentence
+  ne_chunk(pos_tag(word_tokenize("Antonio joined Udacity Inc. in California.")))
+  ```
+
+  Entity types are recognized
+  ![image4]
 
 
 
