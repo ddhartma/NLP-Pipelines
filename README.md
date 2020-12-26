@@ -43,8 +43,158 @@ In this section we will prepare text data from different sources with the follow
 After performing these steps, the text will capture the essence of what was being conveyed in a form that is easier to work with.
 
 ### Cleaning
-Let's walk through an example of cleaning text data from a popular source - the web. There are helpful tools in working with this data, including the
- - [requests library](docs.python-requests.org/en/master/user/quickstart/#make-a-request)
+Open notebook ***./text_processing/cleaning.ipynb*** to handle text cleaning
+- Let's walk through an example of cleaning text data from a popular source - the web. There are helpful tools in working with this data, including the
+ - [requests library](https://2.python-requests.org/en/master/user/quickstart/#make-a-request)
  - [regular expressions](https://docs.python.org/3/library/re.html)
  - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
- 
+
+- Request a web page
+  ```
+  import requests
+  # fetch web page
+  r = requests.get('https://www.udacity.com/courses/all')
+  ```
+
+  Downloaded successfully (status = 200)
+  ```
+  r.status_code
+  ```
+
+- Parsing a Page with Beautifulsoup
+  ```
+  from bs4 import BeautifulSoup
+  soup = BeautifulSoup(r.text, "lxml")
+  soup.text
+  ```
+
+  Print with readable indent
+  ```
+  print(soup.prettify())
+  ```
+
+  List all tags that are nested
+  ```
+  list(soup.children)
+  ```
+
+  List children of children
+  ```
+  html = list(soup.children)[2]
+  body = list(html.children)[3]
+  p = list(body.children)[1]
+  ```
+
+  Get text from children
+  ```
+  p.get_text()
+  ```
+- Finding all instances of a tag at once
+  ```
+  soup.find_all('p')
+  ```
+
+  Use list indexing, it to extract text:
+  ```
+  soup.find_all('p')[0].get_text()
+  ```
+
+  If only first p instance is needed
+  ```
+  soup.find('p')
+  ```
+
+- Searching for tags by class and id
+  Search for any ```p``` tag that has the ```class='outer-text'```
+  ```
+  soup.find_all('p', class_='outer-text')
+  ```
+
+  Search for any tag that has the ```class='outer-text'```
+  ```
+  soup.find_all(class_="outer-text")
+  ```
+
+  Find id
+  ```
+  soup.find_all(id="first")
+  ```
+
+  CSS selectors to find all the p tags in a page that are inside of a div
+  ```
+  soup.select("div p")
+  ```
+
+### Normalization
+Open notebook ***./text_processing/normalization.ipynb*** to handle text normalization
+- ***Case Normalization***: In Machine Learning it does not make sense to differentiate between 'car', 'Car' and 'CAR'. These all three words have the same meaning. Therefore: Normalize all words to lower case
+  ```
+  text = text.lower()
+  ```
+- ***Punctual Removal***: Dependenfing on the NLP task, one wants to remove special characters like periods, question marks, exclamation points and only keep letters of the alphabet and maybe numbers (especially usefull for document classification and clustering where low level details do not matter a lot)
+  ```
+  import re
+  # Remove punctuation from text and
+  # only keep letters of the alphabet and maybe numbers
+  # everything else is replaced by a space
+
+  text = re.sub(r"[^a-zA-Z0-9]", " ", text)
+  ```
+
+
+## Setup Instructions
+The following is a brief set of instructions on setting up a cloned repository.
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+### Prerequisites: Installation of Python via Anaconda and Command Line Interaface
+- Install [Anaconda](https://www.anaconda.com/distribution/). Install Python 3.7 - 64 Bit
+- If you need a good Command Line Interface (CLI) under Windowsa you could use [git](https://git-scm.com/). Under Mac OS use the pre-installed Terminal.
+
+- Upgrade Anaconda via
+```
+$ conda upgrade conda
+$ conda upgrade --all
+```
+
+- Optional: In case of trouble add Anaconda to your system path. Write in your CLI
+```
+$ export PATH="/path/to/anaconda/bin:$PATH"
+```
+
+### Clone the project
+- Open your Command Line Interface
+- Change Directory to your project older, e.g. `cd my_github_projects`
+- Clone the Github Project inside this folder with Git Bash (Terminal) via:
+```
+$ git clone https://github.com/ddhartma/NLP-Pipelines.git
+```
+
+- Change Directory
+```
+$ cd 6_NLP_Pipelines
+```
+
+- Create a new Python environment, e.g. ds_nlp. Inside Git Bash (Terminal) write:
+```
+$ conda create --name ds_nlp
+```
+
+- Install the following packages (via pip or conda)
+```
+numpy = 1.17.4
+pandas = 0.24.2
+```
+
+- Check the environment installation via
+```
+$ conda env list
+```
+
+- Activate the installed environment via
+```
+$ conda activate ds_nlp
+```
+
+## Acknowledgments
+* This project is part of the Udacity Nanodegree program 'Data Science'. Please check this [link](https://www.udacity.com) for more information.
