@@ -376,8 +376,9 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
 
 
 - Bag of Words Approach in code
-  Apply these code lines after text cleaning steps (see above)
-  tokenize(text) is a function for text cleaning and returns a list of word tokens (check the notebook)
+
+  - Apply these code lines after text cleaning steps (see above)
+  - tokenize(text) is a function for text cleaning and returns a list of word tokens (check the notebook)
   ```
   from sklearn.feature_extraction.text import CountVectorizer
 
