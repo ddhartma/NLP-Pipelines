@@ -171,6 +171,23 @@ Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokeniza
     - a tweet tokenizer that is aware of twitter handles, hash tags and emoticons
 
 
+### Stop Words Removal
+Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word removal
+- Stop words are uninformative words like ***is. our, the, in, at, ...*** that do not add a lot of meaning to a sentence.
+- Remove them to reduce the vocabulary size (complexity of later procedures)
+- [NLTK](www.nltk.org/api/nltk.tokenize.html) library  can identify stop words
+  ```
+  # List stop words
+  from nltk.corpus import stopwords
+  print(stopwords.words("english"))
+  ```
+- Remove stop words with a Python list comprehension with a filtering condition
+  ```
+  # Remove stop words
+  words = [w for w in words if w not in stopwords.words("english")]
+  ```
+
+
 
 
 ## Setup Instructions
