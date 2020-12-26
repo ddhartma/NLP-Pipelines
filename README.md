@@ -13,6 +13,8 @@
 [image13]: text_processing13.png "text_processing13"
 [image14]: text_processing14.png "text_processing14"
 [image15]: text_processing15.png "text_processing15"
+[image16]: text_processing16.png "text_processing16"
+[image17]: text_processing17.png "text_processing17"
 
 # NLP Pipelines
 Natural Language Processing is one of the fastest growing fields in the world. NLP is making its way into a number of products and services which we use every day.
@@ -336,7 +338,7 @@ The answer again depends on what kind of model you're using and what task you're
   ![image10]
 
 ### Bag of Words
-Open notebook ***./feature_extraction/bag_of_words_and_TF_IDF.ipynb*** to handle Bag of Words
+Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
 - The Bag of Words model treats each document as an un-ordered collection or bag of words.
 - To obtain a bag of words from a piece of raw text, apply text processing steps:
   - cleaning
@@ -347,7 +349,7 @@ Open notebook ***./feature_extraction/bag_of_words_and_TF_IDF.ipynb*** to handle
 
 - Turn each document into a vector of numbers, representing how many times each word occurs in a document. A set of documents is known as a corpus, and this gives the context for the vectors to be calculated.
 
-  1. Collect all the unique words present in the corpus to form your vocabulary.
+  1. Collect all the unique words present in the corpus to form the vocabulary
   2. Each row is a document
   3. Ech column is a word representation
   4. Count the number of occurrences of each word in each document and enter the value in the respective column.
@@ -372,8 +374,29 @@ Open notebook ***./feature_extraction/bag_of_words_and_TF_IDF.ipynb*** to handle
   - Orthogonal vectors have cosine equal 0
   - Antiparallel vectorshave cosine equal  -1
 
+
+- Bag of Words Approach in code
+  Apply these code lines after text cleaning steps (see above)
+  tokenize(text) is a function for text cleaning and returns a list of word tokens (check the notebook)
+  ```
+  from sklearn.feature_extraction.text import CountVectorizer
+
+  # initialize count vectorizer object
+  vect = CountVectorizer(tokenizer=tokenize)
+
+  # get counts of each token (word) in text data
+  X = vect.fit_transform(corpus)
+
+  # convert sparse matrix to numpy array to view
+  X.toarray()
+
+  # view token vocabulary and counts
+  vect.vocabulary_
+  ```
+
+
 ### TF-IDF
-Open notebook ***./feature_extraction/bag_of_words_and_TF_IDF.ipynb*** to handle TF-IDF
+Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
 
 - One limitation of bag of words approach: It treats every word as being equally important. To solve this problem:  
   - Count the number of documents in which each word occurs and divide the term frequency by the document frequency of that terms
@@ -390,8 +413,74 @@ Open notebook ***./feature_extraction/bag_of_words_and_TF_IDF.ipynb*** to handle
 
   ![image15]
 
-
 - This approach can be used to implement a Spam Detection application based on a supervised learning model.
+
+
+- TF-IDF transformer in code
+  ```
+  from sklearn.feature_extraction.text import TfidfTransformer
+
+  # initialize tf-idf transformer object
+  transformer = TfidfTransformer(smooth_idf=False)
+
+  # use counts from count vectorizer results to compute tf-idf values
+  tfidf = transformer.fit_transform(X)
+
+  # convert sparse matrix to numpy array to view
+  tfidf.toarray()
+  ```
+
+- TF-IDF vectorizer in code
+  --- TfidfVectorizer = CountVectorizer + TfidfTransformer
+  ```
+  from sklearn.feature_extraction.text import CountVectorizer
+
+  # initialize count vectorizer object
+  vect = CountVectorizer(tokenizer=tokenize)
+
+  # get counts of each token (word) in text data
+  X = vect.fit_transform(corpus)
+
+  # convert sparse matrix to numpy array to view
+  X.toarray()
+  ```
+
+### One Hot Encoding
+- Bag of Words approach: getting meanings based on a document level,
+- For a deeper analysis of text, we need to come up with a numerical representation for each word
+- Good approach: One-Hot Encoding
+- It's just like the bag of words idea, only that we keep a single word in each bag and build a vector for it.
+
+  ![image16]
+
+
+### Word Embeddings
+- One-hot encoding breaks for large vocabulary because of the growing vector size
+- Limit the word representation to a fixed-size vector --> Word embedding for each word
+- Properties: if two words are similar in meaning, they should be closer to each other compared to words that are not. And if two pairs of words have a similar difference in their meanings, they should be approximately equally separated in the embedded space.
+- Good for finding
+  - synonyms and analogies,
+  - identifying concepts around which words are clustered,
+  - classifying words as positive, negative, neutral, et cetera.
+
+
+  ![image17]
+
+### Further Options
+- Word2Vec (CBow and Skip-gram models) --- get words in context with neighbouring words, a deep learning approach
+- GloVe --- Global Vecors for Word Representation
+- t-SNE --- t-Distributed Stochastic Neighbouring Embedding
+
+## Modeling
+The final stage of the NLP pipeline is modeling, which includes designing a statistical or machine learning model, fitting its parameters to training data, using an optimization procedure, and then using it to make predictions about unseen data.
+
+The nice thing about working with numerical features is that it allows you to choose from all machine learning models or even a combination of them
+  - Vector machines
+  - Decision Trees
+  - Neural Networks
+
+Once you have a working model, you can deploy it as a web app, mobile app, or integrate it with other products and services.
+
 
 ## Setup Instructions
 The following is a brief set of instructions on setting up a cloned repository.
