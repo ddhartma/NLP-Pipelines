@@ -141,6 +141,37 @@ Open notebook ***./text_processing/normalization.ipynb*** to handle text normali
   text = re.sub(r"[^a-zA-Z0-9]", " ", text)
   ```
 
+### Tokenization
+Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokenization
+- Tokenization is simply splitting each sentence into a sequence of words.
+- Simple method: ```split()```
+  ```
+  # Split text into words
+  words = text.split()
+  print(words)
+  ```
+- [NLTK](www.nltk.org/api/nltk.tokenize.html) library - NATURAL LANGUAGE TOOLKIT
+
+  - It is smarter e.g. in terms of punctuation ['Dr.', 'Smith', 'graduated', ... , '.']
+  - Split text into words
+    ```
+    from nltk.tokenize import word_tokenize
+    # split text into words using NLTK
+    words = word_tokenize(text)
+    ```
+  - Split text into sentences (e.g. for translation)
+    ```
+    from nltk.tokenize import sent_tokenize
+    # split text into sent4ences using NLTK
+    sentences = sent_tokenize(text)
+    ```
+
+  - NLTK has several other options e.g.
+    - a regular expression base tokenizer to ***remove punctuation*** and ***perform tokenization*** in a single step.
+    - a tweet tokenizer that is aware of twitter handles, hash tags and emoticons
+
+
+
 
 ## Setup Instructions
 The following is a brief set of instructions on setting up a cloned repository.
