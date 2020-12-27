@@ -20,33 +20,35 @@
 Natural Language Processing is one of the fastest growing fields in the world. NLP is making its way into a number of products and services which we use every day.
 
 NLP Pipelines contains of three stages:
-1. ***Text Processing***:
-  - Cleaning
-  - Normalization
-  - Tokenization
-  - Stop Word Removal
-  - Part of Speech Tagging
-  - Named Entity Recognition
-  - Stemming and Lemmatization
-2. ***Feature Extraction***:
-  - Bag of Words
-  - TF-IDF
-  - Word Embeddings
-3. ***Modeling***
+1. [***Text Processing***](#Text_Processing):
+  - [Cleaning](#Cleaning)
+  - [Normalization](#Normalization)
+  - [Tokenization](#Tokenization)
+  - [Stop Word Removal](#Stop_Word_Removal)
+  - [Part of Speech Tagging](#Part_of_Speech_Tagging)
+  - [Named Entity Recognition](#Named_Entity_Recognition)
+  - [Stemming and Lemmatization](#Stemming_and_Lemmatization)
+  - [Summary of Text Processing](#Summary_of_Text_Processing)
+2. [***Feature Extraction***](#Feature_Extraction):
+  - [Bag of Words](#Bag_of_Words)
+  - [TF-IDF](#TF-IDF)
+  - [One Hot Encoding](#One_Hot_Encoding)
+  - [Word Embeddings](#Word_Embeddings)
+  - [Further Options](#Further_Options)
+3. [***Modeling***](#Modeling)
 
 Each stage transforms text in some way and produces a result that the next stage needs.
 The goal of text processing is to take raw input text, clean it, normalize it and convert it into a form that is suitable for feature extraction.
 Similarly, the next stage needs to extract and produce feature representations that are appropriate for the type of model one is planning to use and the NLP task one is trying to accomplish. This process isn't always linear and may require additional steps.
 
-## Text Processing
-
+## Text Processing <a name="Text_Processing"></a>
 - ***Extracting plain text***: Textual data can come from a wide variety of sources: the web, PDFs, word documents, speech recognition systems, book scans, etc. Your goal is to extract plain text that is free of any source specific markup or constructs that are not relevant to your task.
 
-![image1]
+  ![image1]
 
 - ***Reducing complexity***: Some features of our language like capitalization, punctuation, and common words such as a, of, and the, often help provide structure, but don't add much meaning. Sometimes it's best to remove them if that helps reduce the complexity of the procedures you want to apply later.
 
-![image2]
+  ![image2]
 
 In this section we will prepare text data from different sources with the following text processing steps:
   1. Cleaning to remove irrelevant items, such as HTML tags
@@ -58,12 +60,13 @@ In this section we will prepare text data from different sources with the follow
 
 After performing these steps, the text will capture the essence of what was being conveyed in a form that is easier to work with.
 
-### Cleaning
+### Cleaning <a name="Cleaning"></a>
 Open notebook ***./text_processing/cleaning.ipynb*** to handle text cleaning
+
 - Let's walk through an example of cleaning text data from a popular source - the web. There are helpful tools in working with this data, including the
- - [requests library](https://2.python-requests.org/en/master/user/quickstart/#make-a-request)
- - [regular expressions](https://docs.python.org/3/library/re.html)
- - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
+  - [requests library](https://2.python-requests.org/en/master/user/quickstart/#make-a-request)
+  - [regular expressions](https://docs.python.org/3/library/re.html)
+  - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 
 - Request a web page
   ```
@@ -76,7 +79,6 @@ Open notebook ***./text_processing/cleaning.ipynb*** to handle text cleaning
   ```
   r.status_code
   ```
-
 - Parsing a Page with Beautifulsoup
   ```
   from bs4 import BeautifulSoup
@@ -141,7 +143,7 @@ Open notebook ***./text_processing/cleaning.ipynb*** to handle text cleaning
   soup.select("div p")
   ```
 
-### Normalization
+### Normalization <a name="Normalization"></a>
 Open notebook ***./text_processing/normalization.ipynb*** to handle text normalization
 - ***Case Normalization***: In Machine Learning it does not make sense to differentiate between 'car', 'Car' and 'CAR'. These all three words have the same meaning. Therefore: Normalize all words to lower case
   ```
@@ -157,7 +159,7 @@ Open notebook ***./text_processing/normalization.ipynb*** to handle text normali
   text = re.sub(r"[^a-zA-Z0-9]", " ", text)
   ```
 
-### Tokenization
+### Tokenization <a name="Tokenization"></a>
 Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokenization
 - Tokenization is simply splitting each sentence into a sequence of words.
 - Simple method: ```split()```
@@ -187,7 +189,7 @@ Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokeniza
     - a tweet tokenizer that is aware of twitter handles, hash tags and emoticons
 
 
-### Stop Words Removal
+### Stop Words Removal  <a name="Stop_Words_Removal"></a>
 Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word removal
 - Stop words are uninformative words like ***is. our, the, in, at, ...*** that do not add a lot of meaning to a sentence.
 - Remove them to reduce the vocabulary size (complexity of later procedures)
@@ -203,18 +205,19 @@ Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word remov
   words = [w for w in words if w not in stopwords.words("english")]
   ```
 
-### Part-of-Speech Tagging
+### Part-of-Speech Tagging <a name="Part_of_Speech_Tagging"></a>
 Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tagging
 - To know the parts of speech (like nouns, verbs, pronouns) can help to understand the meaning of a sentence better
 - It can point out relationships between words and recognize cross references
 - [NLTK](www.nltk.org/api/nltk.tokenize.html) library  can identify parts-of-speech
+
+
   ```
   from nltk import pos_tag
   # Tag parts of speech (PoS)
   sentence = word_tokenize("I always lie down to tell a lie")
   pos_tag(sentence)
   ```
-
   ![image3]
 
 - Sentence Parsing
@@ -239,37 +242,36 @@ Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tag
       print(tree)
   ```
 
-### Named Entity Recognition
+
+### Named Entity Recognition <a name="Named_Entity_Recognition"></a>
 Open notebook ***./text_processing/pos_ner.ipynb*** to handle Named Entity Recognition
-- Named entities are typically noun phrases that refer to some specific object, person, or place
+- ***Named entities*** are typically noun phrases that refer to some specific object, person, or place
 - Named entity recognition is often used to index and search for news articles on companies of interest
-- [NLTK](www.nltk.org/api/nltk.tokenize.html) provides the ne_chunk function to label named entities in text
+- [NLTK](www.nltk.org/api/nltk.tokenize.html) provides the ```ne_chunk``` function to label named entities in text
 - Before using ne_chunk one has to
-  - first tokenize and then
-  - tag parts of speech
-
-  ```
-  from nltk import pos_tag, ne_chunk
-  from nltk.tokenize import word_tokenize
-
-  # Recognize named entities in  a tagged sentence
-  ne_chunk(pos_tag(word_tokenize("Antonio joined Udacity Inc. in California.")))
-  ```
-
-  Entity types are recognized
-  ![image4]
+    - first tokenize and then
+    - tag parts of speech  
+```
+from nltk import pos_tag, ne_chunk
+from nltk.tokenize import word_tokenize
+# Recognize named entities in  a tagged sentence
+ne_chunk(pos_tag(word_tokenize("Antonio joined Udacity Inc. in California.")))
+```
+- Entity types are recognized, e.g.:
+![image4]
 
 
-### Stemming and Lemmatization
+### Stemming and Lemmatization <a name="Stemming_and_Lemmatization"></a>
 Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemmatization
 - ***Stemming***: In order to further simplify text data, stemming is the process of reducing a word to its stem or root form.
 - For instance, branching, branched, branches et cetera, can all be reduced to branch.
 - the suffixes 'ing' and 'ed' can be dropped off, 'ies' can be replaced by 'y' et cetera.
 - Stemming is meant to be a fast operation
 - NLTK has a few different stemmers for you to choose from
-  - PorterStemmer
-  - SnowballStemmer
-  - other language-specific stemmers
+    - PorterStemmer
+    - SnowballStemmer
+    - other language-specific stemmers
+
 
 - PorterStemmer (remove stop words beforehand)
   ```
@@ -304,7 +306,7 @@ Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemm
   ![image5]
 
 
-### Summary of Text Processing
+### Summary of Text Processing <a name="Summary_of_Text_Processing"></a>
  1. Normalize
  2. Tokenize
  3. Remove Stop Words
@@ -313,7 +315,7 @@ Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemm
  ![image6]
 
 
-## Feature extraction
+## Feature extraction <a name="Feature_extraction"></a>
 - Now text is clean and normalized. Can we feed this into a statistical or a machine learning model? Text data is represented using an encoding such as ASCII or Unicode that maps every character to a number. Computer store and transmit these values as binaries. These numbers also have an implicit ordering, 65 < 66 < 67. But does that mean A is less than B. No. This would mislead the natural language processing algorithms. Moreover, individual characters don't carry much meaning at all. It is words that one should be concerned with,
 
 - So the question is, how do we come up with a representation for text data that we can use as features for modeling?
@@ -337,7 +339,7 @@ The answer again depends on what kind of model you're using and what task you're
 
   ![image10]
 
-### Bag of Words
+### Bag of Words <a name="Bag_of_Words"></a>
 Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
 - The Bag of Words model treats each document as an un-ordered collection or bag of words.
 - To obtain a bag of words from a piece of raw text, apply text processing steps:
@@ -396,7 +398,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
   ```
 
 
-### TF-IDF
+### TF-IDF <a name="TF_IDF"></a>
 Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
 
 - One limitation of bag of words approach: It treats every word as being equally important. To solve this problem:  
@@ -446,7 +448,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
   X.toarray()
   ```
 
-### One Hot Encoding
+### One Hot Encoding <a name="One_Hot_Encoding"></a>
 - Bag of Words approach: getting meanings based on a document level,
 - For a deeper analysis of text, we need to come up with a numerical representation for each word
 - Good approach: One-Hot Encoding
@@ -455,7 +457,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
   ![image16]
 
 
-### Word Embeddings
+### Word Embeddings <a name="Word_Embeddings"></a>
 - One-hot encoding breaks for large vocabulary because of the growing vector size
 - Limit the word representation to a fixed-size vector --> Word embedding for each word
 - Properties: if two words are similar in meaning, they should be closer to each other compared to words that are not. And if two pairs of words have a similar difference in their meanings, they should be approximately equally separated in the embedded space.
@@ -467,12 +469,12 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
 
   ![image17]
 
-### Further Options
+### Further Options <a name="Further_Options"></a>
 - Word2Vec (CBow and Skip-gram models) --- get words in context with neighbouring words, a deep learning approach
 - GloVe --- Global Vecors for Word Representation
 - t-SNE --- t-Distributed Stochastic Neighbouring Embedding
 
-## Modeling
+## Modeling <a name="Modeling"></a>
 The final stage of the NLP pipeline is modeling, which includes designing a statistical or machine learning model, fitting its parameters to training data, using an optimization procedure, and then using it to make predictions about unseen data.
 
 The nice thing about working with numerical features is that it allows you to choose from all machine learning models or even a combination of them
