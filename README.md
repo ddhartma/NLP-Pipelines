@@ -29,13 +29,19 @@ NLP Pipelines contains of three stages:
   - [Named Entity Recognition](#Named_Entity_Recognition)
   - [Stemming and Lemmatization](#Stemming_and_Lemmatization)
   - [Summary of Text Processing](#Summary_of_Text_Processing)
+
 2. [***Feature Extraction***](#Feature_Extraction):
   - [Bag of Words](#Bag_of_Words)
-  - [TF-IDF](#TF-IDF)
+  - [TF-IDF](#TF_IDF)
   - [One Hot Encoding](#One_Hot_Encoding)
   - [Word Embeddings](#Word_Embeddings)
   - [Further Options](#Further_Options)
+
 3. [***Modeling***](#Modeling)
+
+4. [***Setup Instructions***](#Setup_Instructions)
+  - [Prerequisites](#Prerequisites)
+  - [Clone the project](#Clone_the_project)
 
 Each stage transforms text in some way and produces a result that the next stage needs.
 The goal of text processing is to take raw input text, clean it, normalize it and convert it into a form that is suitable for feature extraction.
@@ -485,12 +491,12 @@ The nice thing about working with numerical features is that it allows you to ch
 Once you have a working model, you can deploy it as a web app, mobile app, or integrate it with other products and services.
 
 
-## Setup Instructions
+## Setup Instructions <a name="Setup_Instructions"></a>
 The following is a brief set of instructions on setting up a cloned repository.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites: Installation of Python via Anaconda and Command Line Interaface
+### Prerequisites: Installation of Python via Anaconda and Command Line Interaface <a name="Prerequisites"></a>
 - Install [Anaconda](https://www.anaconda.com/distribution/). Install Python 3.7 - 64 Bit
 - If you need a good Command Line Interface (CLI) under Windowsa you could use [git](https://git-scm.com/). Under Mac OS use the pre-installed Terminal.
 
@@ -505,7 +511,7 @@ $ conda upgrade --all
 $ export PATH="/path/to/anaconda/bin:$PATH"
 ```
 
-### Clone the project
+### Clone the project <a name="Clone_the_project"></a>
 - Open your Command Line Interface
 - Change Directory to your project older, e.g. `cd my_github_projects`
 - Clone the Github Project inside this folder with Git Bash (Terminal) via:
