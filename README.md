@@ -206,7 +206,7 @@ Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word remov
 ### Part-of-Speech Tagging
 Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tagging
 - To know the parts of speech (like nouns, verbs, pronouns) can help to understand the meaning of a sentence better
-- It can point out relationships betwee nwords and recognize cross references
+- It can point out relationships between words and recognize cross references
 - [NLTK](www.nltk.org/api/nltk.tokenize.html) library  can identify parts-of-speech
   ```
   from nltk import pos_tag
