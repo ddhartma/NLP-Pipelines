@@ -174,7 +174,7 @@ Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokeniza
   words = text.split()
   print(words)
   ```
-- [NLTK](www.nltk.org/api/nltk.tokenize.html) library - NATURAL LANGUAGE TOOLKIT
+- [NLTK](http://www.nltk.org/book/) library - NATURAL LANGUAGE TOOLKIT
 
   - It is smarter e.g. in terms of punctuation ['Dr.', 'Smith', 'graduated', ... , '.']
   - Split text into words
@@ -199,7 +199,7 @@ Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokeniza
 Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word removal
 - Stop words are uninformative words like ***is. our, the, in, at, ...*** that do not add a lot of meaning to a sentence.
 - Remove them to reduce the vocabulary size (complexity of later procedures)
-- [NLTK](www.nltk.org/api/nltk.tokenize.html) library  can identify stop words
+- [NLTK](http://www.nltk.org/book/) library  can identify stop words
   ```
   # List stop words
   from nltk.corpus import stopwords
@@ -215,7 +215,7 @@ Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word remov
 Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tagging
 - To know the parts of speech (like nouns, verbs, pronouns) can help to understand the meaning of a sentence better
 - It can point out relationships between words and recognize cross references
-- [NLTK](www.nltk.org/api/nltk.tokenize.html) library  can identify parts-of-speech
+- [NLTK](http://www.nltk.org/book/) library  can identify parts-of-speech
 
 
   ```
@@ -253,7 +253,7 @@ Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tag
 Open notebook ***./text_processing/pos_ner.ipynb*** to handle Named Entity Recognition
 - ***Named entities*** are typically noun phrases that refer to some specific object, person, or place
 - Named entity recognition is often used to index and search for news articles on companies of interest
-- [NLTK](www.nltk.org/api/nltk.tokenize.html) provides the ```ne_chunk``` function to label named entities in text
+- [NLTK](http://www.nltk.org/book/) provides the ```ne_chunk``` function to label named entities in text
 - Before using ne_chunk one has to
     - first tokenize and then
     - tag parts of speech  
@@ -290,7 +290,7 @@ Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemm
 - ***Lemmatization***: This is another technique to reduce words to a normalize form
 - In this case the transformation uses a ***dictionary*** to map different variants of a word back to its root.
 - With this approach, we are able to reduce non-trivial inflections such as 'is', 'was', 'were', back to the root 'be'.
-- [NLTK](www.nltk.org/api/nltk.tokenize.html) uses the default lemmatizer Wordnet database.
+- [NLTK](http://www.nltk.org/book/) uses the default lemmatizer Wordnet database.
   ```
   from nltk.stem.wordnet import WordNetLemmatizer
 
@@ -547,3 +547,4 @@ $ conda activate ds_nlp
 
 ## Acknowledgments
 * This project is part of the Udacity Nanodegree program 'Data Science'. Please check this [link](https://www.udacity.com) for more information.
+* Further good overview about NLP pipelines can be found [here](https://medium.com/@haataa/nlp-pipeline-101-with-basic-code-example-cleaning-aeb23370a12)
