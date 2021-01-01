@@ -16,6 +16,9 @@
 [image16]: git_images/text_processing16.png "text_processing16"
 [image17]: git_images/text_processing17.png "text_processing17"
 
+| Header One     | Header Two     |
+| :------------- | :------------- |
+| Item One       | Item Two       |
 # NLP Pipelines
 Natural Language Processing is one of the fastest growing fields in the world. NLP is making its way into a number of products and services which we use every day.
 
@@ -387,6 +390,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
 
   - Apply these code lines after text cleaning steps (see above)
   - tokenize(text) is a function for text cleaning and returns a list of word tokens (check the notebook)
+  
   ```
   from sklearn.feature_extraction.text import CountVectorizer
 
@@ -404,7 +408,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
   ```
 
 
-### TF-IDF <a name="TF_IDF"></a>
+### [TF-IDF](https://kavita-ganesan.com/tfidftransformer-tfidfvectorizer-usage-differences/#.X-9MG-AxmFo) <a name="TF_IDF"></a>
 Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
 
 - One limitation of bag of words approach: It treats every word as being equally important. To solve this problem:  
