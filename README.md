@@ -303,7 +303,6 @@ Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemm
   ```
 
 -  A lemmatizer needs to know about the part of speech for each word it's trying to transform. In this case, WordNetLemmatizer defaults to nouns, but one can override that by specifying the PoS parameter. Let's pass in 'v' for verbs.
-
   ```
   Lemmatize verbs by specifying pos
   lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in lemmed]
@@ -390,7 +389,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
 
   - Apply these code lines after text cleaning steps (see above)
   - tokenize(text) is a function for text cleaning and returns a list of word tokens (check the notebook)
-  
+
   ```
   from sklearn.feature_extraction.text import CountVectorizer
 
