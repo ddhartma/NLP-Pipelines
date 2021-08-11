@@ -78,88 +78,88 @@ Open notebook ***./text_processing/cleaning.ipynb*** to handle text cleaning
   - [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/)
 
 - Request a web page
-  ```
+  ```python
   import requests
   # fetch web page
   r = requests.get('https://www.udacity.com/courses/all')
   ```
 
   Downloaded successfully (status = 200)
-  ```
+  ```python
   r.status_code
   ```
 - Parsing a Page with Beautifulsoup
-  ```
+  ```python
   from bs4 import BeautifulSoup
   soup = BeautifulSoup(r.text, "lxml")
   soup.text
   ```
 
   Print with readable indent
-  ```
+  ```python
   print(soup.prettify())
   ```
 
   List all tags that are nested
-  ```
+  ```python
   list(soup.children)
   ```
 
   List children of children
-  ```
+  ```python
   html = list(soup.children)[2]
   body = list(html.children)[3]
   p = list(body.children)[1]
   ```
 
   Get text from children
-  ```
+  ```python
   p.get_text()
   ```
 - Finding all instances of a tag at once
-  ```
+  ```python
   soup.find_all('p')
   ```
 
   Use list indexing, it to extract text:
-  ```
+  ```python
   soup.find_all('p')[0].get_text()
   ```
 
   If only first p instance is needed
-  ```
+  ```python
   soup.find('p')
   ```
 
 - Searching for tags by class and id
   Search for any ```p``` tag that has the ```class='outer-text'```
-  ```
+  ```python
   soup.find_all('p', class_='outer-text')
   ```
 
   Search for any tag that has the ```class='outer-text'```
-  ```
+  ```python
   soup.find_all(class_="outer-text")
   ```
 
   Find id
-  ```
+  ```python
   soup.find_all(id="first")
   ```
 
   CSS selectors to find all the p tags in a page that are inside of a div
-  ```
+  ```python
   soup.select("div p")
   ```
 
 ### Normalization <a name="Normalization"></a>
 Open notebook ***./text_processing/normalization.ipynb*** to handle text normalization
 - ***Case Normalization***: In Machine Learning it does not make sense to differentiate between 'car', 'Car' and 'CAR'. These all three words have the same meaning. Therefore: Normalize all words to lower case
-  ```
+  ```python
   text = text.lower()
   ```
 - ***Punctual Removal***: Dependenfing on the NLP task, one wants to remove special characters like periods, question marks, exclamation points and only keep letters of the alphabet and maybe numbers (especially usefull for document classification and clustering where low level details do not matter a lot)
-  ```
+  ```python
   import re
   # Remove punctuation from text and
   # only keep letters of the alphabet and maybe numbers
@@ -172,7 +172,7 @@ Open notebook ***./text_processing/normalization.ipynb*** to handle text normali
 Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokenization
 - Tokenization is simply splitting each sentence into a sequence of words.
 - Simple method: ```split()```
-  ```
+  ```python
   # Split text into words
   words = text.split()
   print(words)
@@ -181,13 +181,13 @@ Open notebook ***./text_processing/tokenization.ipynb*** to handle text tokeniza
 
   - It is smarter e.g. in terms of punctuation ['Dr.', 'Smith', 'graduated', ... , '.']
   - Split text into words
-    ```
+    ```python
     from nltk.tokenize import word_tokenize
     # split text into words using NLTK
     words = word_tokenize(text)
     ```
   - Split text into sentences (e.g. for translation)
-    ```
+    ```python
     from nltk.tokenize import sent_tokenize
     # split text into sentences using NLTK
     sentences = sent_tokenize(text)
@@ -203,13 +203,13 @@ Open notebook ***./text_processing/stop_words.ipynb*** to handle stop word remov
 - Stop words are uninformative words like ***is. our, the, in, at, ...*** that do not add a lot of meaning to a sentence.
 - Remove them to reduce the vocabulary size (complexity of later procedures)
 - [NLTK](http://www.nltk.org/book/) library  can identify stop words
-  ```
+  ```python
   # List stop words
   from nltk.corpus import stopwords
   print(stopwords.words("english"))
   ```
 - Remove stop words with a Python list comprehension with a filtering condition
-  ```
+  ```python
   # Remove stop words
   words = [w for w in words if w not in stopwords.words("english")]
   ```
@@ -221,7 +221,7 @@ Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tag
 - [NLTK](http://www.nltk.org/book/) library  can identify parts-of-speech
 
 
-  ```
+  ```python
   from nltk import pos_tag
   # Tag parts of speech (PoS)
   sentence = word_tokenize("I always lie down to tell a lie")
@@ -230,7 +230,7 @@ Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tag
   ![image3]
 
 - Sentence Parsing
-  ```
+  ```python
   # Define a custom grammar
   my_grammar = nltk.CFG.fromstring("""
   S -> NP VP
@@ -244,7 +244,7 @@ Open notebook ***./text_processing/pos_ner.ipynb*** to handle Part-of-Speech Tag
   """)
   parser = nltk.ChartParser(my_grammar)
   ```
-  ```
+  ```python
   # Parse a sentence
   sentence = word_tokenize("I shot an elephant in my pajamas")
   for tree in parser.parse(sentence):
@@ -260,7 +260,7 @@ Open notebook ***./text_processing/pos_ner.ipynb*** to handle Named Entity Recog
 - Before using ne_chunk one has to
     - first tokenize and then
     - tag parts of speech  
-```
+```python
 from nltk import pos_tag, ne_chunk
 from nltk.tokenize import word_tokenize
 # Recognize named entities in  a tagged sentence
@@ -271,11 +271,11 @@ ne_chunk(pos_tag(word_tokenize("Antonio joined Udacity Inc. in California.")))
 
 
 ### Stemming and Lemmatization <a name="Stemming_and_Lemmatization"></a>
-Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemmatization
+Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemmatization.
 - ***Stemming***: In order to further simplify text data, stemming is the process of reducing a word to its stem or root form.
 - For instance, branching, branched, branches et cetera, can all be reduced to branch.
 - the suffixes 'ing' and 'ed' can be dropped off, 'ies' can be replaced by 'y' et cetera.
-- Stemming is meant to be a fast operation
+- Stemming is meant to be a fast operation.
 - NLTK has a few different stemmers for you to choose from
     - PorterStemmer
     - SnowballStemmer
@@ -283,18 +283,18 @@ Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemm
 
 
 - PorterStemmer (remove stop words beforehand)
-  ```
+  ```python
   from nltk.stem.porter import PorterStemmer
 
   # Reduce words to their stem
   stemmed = [PorterStemmer().stem(w) for w in words]
   print(stemmed)
   ```
-- ***Lemmatization***: This is another technique to reduce words to a normalize form
+- ***Lemmatization***: This is another technique to reduce words to a normalized form
 - In this case the transformation uses a ***dictionary*** to map different variants of a word back to its root.
 - With this approach, we are able to reduce non-trivial inflections such as 'is', 'was', 'were', back to the root 'be'.
 - [NLTK](http://www.nltk.org/book/) uses the default lemmatizer Wordnet database.
-  ```
+  ```python
   from nltk.stem.wordnet import WordNetLemmatizer
 
   # Reduce words to their root form
@@ -302,8 +302,8 @@ Open notebook ***./text_processing/stem_lem.ipynb*** to handle Stemming and Lemm
   print(lemmed)
   ```
 
--  A lemmatizer needs to know about the part of speech for each word it's trying to transform. In this case, WordNetLemmatizer defaults to nouns, but one can override that by specifying the PoS parameter. Let's pass in 'v' for verbs.
-  ```
+-  A lemmatizer needs to know about the part of speech for each word it's trying to transform. In this case, WordNetLemmatizer defaults to nouns, but one can override that by specifying the **POS** parameter. Let's pass in 'v' for verbs.
+  ```python
   Lemmatize verbs by specifying pos
   lemmed = [WordNetLemmatizer().lemmatize(w, pos='v') for w in lemmed]
   print(lemmed)
@@ -361,7 +361,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
 
   1. Collect all the unique words present in the corpus to form the vocabulary
   2. Each row is a document
-  3. Ech column is a word representation
+  3. Each column is a word representation
   4. Count the number of occurrences of each word in each document and enter the value in the respective column.
 
   ![image12]
@@ -390,7 +390,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle Bag of Words
   - Apply these code lines after text cleaning steps (see above)
   - tokenize(text) is a function for text cleaning and returns a list of word tokens (check the notebook)
 
-  ```
+  ```python
   from sklearn.feature_extraction.text import CountVectorizer
 
   # initialize count vectorizer object
@@ -429,7 +429,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
 
 
 - TF-IDF transformer in code
-  ```
+  ```python
   from sklearn.feature_extraction.text import TfidfTransformer
 
   # initialize tf-idf transformer object
@@ -444,7 +444,7 @@ Open notebook ***./feature_extraction/bow_tfidf.ipynb*** to handle TF-IDF
 
 - TF-IDF vectorizer in code
   --- TfidfVectorizer = CountVectorizer + TfidfTransformer
-  ```
+  ```python
   from sklearn.feature_extraction.text import CountVectorizer
 
   # initialize count vectorizer object
